@@ -1,6 +1,6 @@
 FROM openjdk
 
-COPY ./target/service-discovery-0.0.1-SNAPSHOT.jar /opt/app/
+COPY target/service-discovery-0.0.1-SNAPSHOT.jar /opt/app/
 
 WORKDIR /opt/app
 
