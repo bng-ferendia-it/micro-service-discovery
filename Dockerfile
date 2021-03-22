@@ -1,9 +1,16 @@
-FROM openjdk
+FROM maven:3.6.3-openjdk-11 AS maven_build
 
-COPY target/service-discovery-0.0.1-SNAPSHOT.jar /opt/app/
+COPY pom.xml /tmp/
 
-WORKDIR /opt/app
+COPY src /tmp/src/
 
-RUN sh -c 'touch service-discovery-0.0.1-SNAPSHOT.jar'
+WORKDIR /tmp/
 
-ENTRYPOINT ["java","-jar","service-discovery-0.0.1-SNAPSHOT.jar"]
+RUN mvn package
+
+
+FROM openjdk:latest
+
+CMD java -jar /data/service-discovery-0.0.1-SNAPSHOT.jar
+
+COPY --from=maven_build /tmp/target/service-discovery-0.0.1-SNAPSHOT.jar /data/service-discovery-0.0.1-SNAPSHOT.jar
