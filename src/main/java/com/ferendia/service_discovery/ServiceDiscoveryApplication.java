@@ -1,4 +1,4 @@
-package com.ferendia.servicediscovery;
+package com.ferendia.service_discovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
