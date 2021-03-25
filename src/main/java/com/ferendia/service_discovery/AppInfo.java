@@ -3,10 +3,12 @@ package com.ferendia.service_discovery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class AppInfo implements InfoContributor {
 
     @Value("${spring.application.name}")

@@ -1,16 +1,21 @@
-FROM maven:3.6.3-openjdk-11 AS maven_build
+FROM openjdk:11
 
-COPY pom.xml /tmp/
+#Environment vars
+ENV PROFILE=default
+ENV PORT=8761
+ENV DISCOVER_INSTANCES_HOST=localhost
+ENV DISCOVER_AS_CLIENT=false
+ENV FETCH_REGISTRY=false
+ENV DISCOVERY_USER=user
+ENV DISCOVERY_PASSWORD=password
+ENV CONFIG_URI=http://localhost:8888
+ENV CONFIG_USER=user
+ENV CONFIG_PASSWORD=password
 
-COPY src /tmp/src/
 
-WORKDIR /tmp/
+#Copy app
+COPY *.jar app.jar
 
-RUN mvn package
-
-
-FROM openjdk:latest
-
-CMD java -jar /data/service-discovery-0.0.1-SNAPSHOT.jar
-
-COPY --from=maven_build /tmp/target/service-discovery-0.0.1-SNAPSHOT.jar /data/service-discovery-0.0.1-SNAPSHOT.jar
+#Run app with envirement
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "app.jar"]
+CMD ["--$PORT","--$DISCOVER_INSTANCES_HOST","--$DISCOVER_AS_CLIENT","--$FETCH_REGISTRY","--$DISCOVERY_USER","--$DISCOVERY_PASSWORD", "--$CONFIG_URI", "--$CONFIG_USER", "--$CONFIG_PASSWORD" ]
