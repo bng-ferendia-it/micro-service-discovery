@@ -6,7 +6,7 @@ on:
       tags:
         - v*
 env:
-    IMAGE_NAME: ms-gateway
+    IMAGE_NAME: ms-discovery
 
 jobs:
     build:
